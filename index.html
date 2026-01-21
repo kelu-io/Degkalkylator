@@ -1,0 +1,174 @@
+<body>
+
+<div class="container">
+  <!-- =========================
+       App Header
+  ========================= -->
+  <header class="app-header">
+    <button id="settingsBtn" aria-label="Inställningar">⚙️</button>
+    <h1>🥖 Degkalkylator</h1>
+  </header>
+
+
+  <!-- =========================
+       Settings panel
+  ========================= -->
+  <div id="settingsPanel" class="settings-panel">
+
+    <h3>Inställningar</h3>
+
+    <!-- Utseende -->
+    <h4>Utseende</h4>
+    <label class="toggle-row">
+      <div class="toggle-left">
+        <span id="themeIcon">🌙</span>
+        <span>Mörkt / ljust läge</span>
+      </div>
+      <input type="checkbox" id="themeToggle">
+      <span class="switch"></span>
+    </label>
+
+    <hr>
+
+    <!-- Beräkning -->
+    <h4>Beräkning</h4>
+    <label class="toggle-row">
+      <span>🥣 Använd fördeg</span>
+      <input type="checkbox" id="usePref">
+      <span class="switch"></span>
+    </label>
+
+    <hr>
+
+    <!-- Data -->
+    <h4>Data</h4>
+    <label class="toggle-row">
+      <span>📖 Recept</span>
+      <input type="checkbox" id="recipeToggle">
+      <span class="switch"></span>
+    </label>
+
+    <!-- Receptsektion -->
+    <div id="recipeSection" class="recipe-section collapsed">
+
+      <input
+        type="text"
+        id="recipeNameInput"
+        placeholder="Namn på recept..."
+      >
+
+      <button id="saveRecipeBtn" class="settings-btn">
+        💾 Spara recept
+      </button>
+      
+      <button id="deleteRecipeBtn" class="settings-btn">
+  🗑 Radera recept
+</button>
+
+      <label id="recipeSelectWrapper">
+        📂 Välj recept
+        <select id="recipeSelect">
+          <option value="">– Välj sparat recept –</option>
+        </select>
+      </label>
+
+      <hr>
+
+      <button id="exportRecipesBtn" class="settings-btn">
+        📤 Exportera recept
+      </button>
+
+      <input
+        type="file"
+        id="importRecipesInput"
+        accept=".json"
+        style="display:none;"
+      >
+
+      <button id="importRecipesBtn" class="settings-btn">
+        📥 Importera recept
+      </button>
+
+    </div>
+
+  </div>
+
+
+  <!-- =========================
+       Dynamiskt verktygsfält
+       (recept flyttas hit)
+  ========================= -->
+  <div id="recipeInsertPoint"></div>
+
+
+  <!-- =========================
+       Grundinput
+  ========================= -->
+  <section class="base-inputs">
+    <label>⚖️ Total degvikt (g)</label>
+    <input type="number" id="totalDoughInput" value="1000">
+  </section>
+
+
+  <!-- =========================
+       Fördeg
+  ========================= -->
+  <section id="prefSection" class="collapsed">
+    <hr>
+    <h2>Fördeg</h2>
+
+    <label>Andel av total deg (%)</label>
+    <input type="number" id="prefPct" value="0">
+
+    <label>Hydration fördeg (%)</label>
+    <input type="number" id="prefHyd" value="60">
+
+    <label>Jäst fördeg (%)</label>
+    <input type="number" id="prefYeastPct" value="0.1" step="0.01">
+
+    <p>🌾 Mjöl: <strong><span id="prefFlour">0</span> g</strong></p>
+    <p>💧 Vatten: <strong><span id="prefWater">0</span> g</strong></p>
+    <p>🍞 Jäst: <strong><span id="prefYeast">0</span> g</strong></p>
+    <p>⚖️ Fördeg totalt: <strong><span id="prefTotal">0</span> g</strong></p>
+  </section>
+
+
+  <!-- =========================
+       Huvuddeg
+  ========================= -->
+  <section class="main-dough">
+    <hr>
+    <h2>Huvuddeg</h2>
+
+    <label>Hydration (%)</label>
+    <input type="number" id="waterPct" value="65">
+
+    <label>Salt (%)</label>
+    <input type="number" id="saltPct" value="2.5">
+
+    <label>Jäst (%)</label>
+    <input type="number" id="yeastPct" value="1.0">
+
+    <p>🌾 Mjöl: <strong><span id="mainFlour">0</span> g</strong></p>
+    <p>💧 Vatten: <strong><span id="mainWater">0</span> g</strong></p>
+    <p>🧂 Salt: <strong><span id="salt">0</span> g</strong></p>
+    <p>🍞 Jäst: <strong><span id="yeast">0</span> g</strong></p>
+    <p>⚖️ Huvuddeg totalt: <strong><span id="mainTotal">0</span> g</strong></p>
+  </section>
+
+
+  <!-- =========================
+       Totalt
+  ========================= -->
+  <section class="totals">
+    <hr>
+    <h2>Totalt</h2>
+
+    <p>🌾 Totalt mjöl: <strong><span id="totalFlour">0</span> g</strong></p>
+    <p>💧 Totalt vatten: <strong><span id="totalWater">0</span> g</strong></p>
+    <p>⚖️ Total deg: <strong><span id="totalCheck">0</span> g</strong></p>
+  </section>
+
+</div>
+
+</body>
