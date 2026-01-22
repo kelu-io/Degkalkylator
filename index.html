@@ -9,20 +9,14 @@
        Reset & Base
     ============================ */
     html, body {
+      height: 100%;
       margin: 0;
       padding: 0;
-      height: 100%;
-      min-height: 100vh;
       font-family: -apple-system, system-ui, sans-serif;
-      transition: background 0.3s, color 0.3s;
-    }
-    
-    body {
       background: #0f0f12;
       color: #f2f2f7;
-      display: flex;
-      justify-content: center;
-      align-items: flex-start;
+      padding: 20px;
+      transition: background 0.3s, color 0.3s;
     }
 
     /* =============================
@@ -33,11 +27,9 @@
       padding: 20px;
       border-radius: 14px;
       max-width: 420px;
-      width: 100%;
-      margin: 20px;
-      min-height: calc(100vh - 40px);
-      box-sizing: border-box;
+      margin: auto;
     }
+
     /* =============================
        Typography & Text
     ============================ */
@@ -90,7 +82,7 @@
        Light mode
     ============================ */
     body.light { background: #f2f2f7; color: #000; }
-    body.light .container { background: #ffffff; }
+    body.light .container { background: #fff; }
     body.light label, body.light p, body.light strong { color: #000; }
     body.light input { background:#fff; color:#000; border:1px solid #ccc; }
     body.light hr { border-top:1px solid #ccc; }
@@ -100,6 +92,11 @@
     body.light #settingsPanel button:hover, body.light #settingsPanel select:hover { background:#e0e0e0; }
     body.light #recipeSelect { background:#fff; color:#000; border:1px solid #ccc; }
     body.light #recipeSelectWrapper { color:#000; }
+    
+    /* Fix: iOS / mobile viewport background */
+    body {
+      background-attachment: fixed; 
+    }
   </style>
 </head>
 
