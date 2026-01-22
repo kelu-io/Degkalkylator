@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>🥖 Degkalkylator</title>
+  <title>Degkalkylator</title>
   <style>
     /* =============================
        Reset & Base
@@ -97,6 +97,24 @@
     body {
       background-attachment: fixed; 
     }
+    
+    /* =========================
+      Reset icon button
+    ========================= */
+    .reset-icon {
+      display: block;
+      margin: 12px auto;
+      background: none;
+      border: none;
+      font-size: 26px;
+      cursor: pointer;
+      color: #ff3b30; /* iOS-röd */
+      transition: transform 0.15s ease, opacity 0.15s ease;
+    }
+    .reset-icon:hover {
+      transform: rotate(-20deg) scale(1.1);
+      opacity: 0.85;
+    }
   </style>
 </head>
 
@@ -151,7 +169,7 @@
       <!-- Återställ data -->
       <hr>
       <button id="resetAppBtn" class="settings-btn danger">
-        ↺ Återställ alla värden
+        🔄 Återställ app
       </button>
     </div>
 
