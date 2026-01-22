@@ -75,7 +75,6 @@
     .recipe-section.collapsed { display: none; }
     #settingsPanel button, #settingsPanel select { width: 65%; padding: 8px; font-size: 16px; border-radius: 10px; margin-top: 8px; background: #2c2c2e; border: 1px solid #3a3a3c; color: #f2f2f7; -webkit-appearance: none; cursor: pointer; transition: all 0.2s; }
     #settingsPanel button:hover, #settingsPanel select:hover { background: #3a3a3c; }
-    #recipeSelectWrapper { display: block; margin-top: 12px; font-weight: 600; color: #d1d1d6; }
     #recipeSelect { width: 65%; padding: 8px; font-size: 16px; margin-top: 6px; border-radius: 10px; background: #2c2c2e; color:#fff; border:1px solid #3a3a3c; -webkit-appearance:none; appearance:none; transition: all 0.3s; }
 
     /* =============================
@@ -107,7 +106,6 @@
     body.light #settingsPanel button, body.light #settingsPanel select { background:#f2f2f7; border:1px solid #ccc; color:#000; }
     body.light #settingsPanel button:hover, body.light #settingsPanel select:hover { background:#e0e0e0; }
     body.light #recipeSelect { background:#fff; color:#000; border:1px solid #ccc; }
-    body.light #recipeSelectWrapper { color:#000; }
     
     /* Fix: iOS / mobile viewport background */
     body {
@@ -170,7 +168,7 @@
 
     <!-- Välj recept -->
     <section id="recipeSelectorSection">
-      <label id="recipeSelectWrapper">
+      <label>
         📂 Välj recept
         <select id="recipeSelect">
           <option value="">– Inget recept –</option>
@@ -262,7 +260,6 @@
 
       const recipeToggle = document.getElementById("recipeToggle");
       const recipeSelect = document.getElementById("recipeSelect");
-      const recipeSelectWrapper = document.getElementById("recipeSelectWrapper");
 
       const recipeNameInput = document.getElementById("recipeNameInput");
       const saveRecipeBtn = document.getElementById("saveRecipeBtn");
