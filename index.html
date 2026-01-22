@@ -346,6 +346,17 @@
         recipeSelect.value="";
       });
 
+      function applyDefaults() {
+        totalDoughInput.value = 1000;
+        prefPct.value = 0;
+        prefHyd.value = 60;
+        prefYeastPct.value = 0.1;
+        waterPct.value = 65;
+        saltPct.value = 2.5;
+        yeastPct.value = 1.0;
+        recalc();
+      }
+
       function refreshDropdown(){
         recipeSelect.innerHTML=`<option value="">– Inget recept –</option>`;
         recipes.forEach((r,i)=> {
@@ -356,17 +367,21 @@
         });
       }
 
-      recipeSelect.addEventListener("change",()=> {
+      recipeSelect.addEventListener("change",() => {
         const idx = recipeSelect.value;
-        if(idx==="")return;
+        if (idx === "") {
+          applyDefaults();
+          return;
+        }
         const r = recipes[idx];
-        totalDoughInput.value=r.D;
-        prefPct.value=r.P;
-        prefHyd.value=r.PH;
-        prefYeastPct.value=r.PY;
-        waterPct.value=r.W;
-        saltPct.value=r.S;
-        yeastPct.value=r.Y;
+        if (!r) return;
+        totalDoughInput.value = r.D;
+        prefPct.value = r.P;
+        prefHyd.value = r.PH;
+        prefYeastPct.value = r.PY;
+        waterPct.value = r.W;
+        saltPct.value = r.S;
+        yeastPct.value = r.Y;
         recalc();
       });
 
