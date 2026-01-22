@@ -140,7 +140,7 @@
         <button id="saveRecipeBtn" class="settings-btn">💾 Spara recept</button>
         <button id="deleteRecipeBtn" class="settings-btn">🗑 Radera recept</button>
         <label id="recipeSelectWrapper">📂 Välj recept
-          <select id="recipeSelect"><option value="">– Välj sparat recept –</option></select>
+          <select id="recipeSelect"><option value="">– Inget recept... –</option></select>
         </label>
         <hr>
         <button id="exportRecipesBtn" class="settings-btn">📤 Exportera recept</button>
@@ -337,7 +337,7 @@
       });
 
       function refreshDropdown(){
-        recipeSelect.innerHTML=`<option value="">– Välj sparat recept –</option>`;
+        recipeSelect.innerHTML=`<option value="">– Inget recept... –</option>`;
         recipes.forEach((r,i)=> {
           const option=document.createElement("option");
           option.value=i;
