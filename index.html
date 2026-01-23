@@ -375,17 +375,23 @@
         const idx = recipeSelect.value;
         if (idx === "") {
           applyDefaults();
+          usePref.checked = false;
+          usePref.dispatchEvent(new Event("change"));
           return;
         }
         const r = recipes[idx];
         if (!r) return;
         totalDoughInput.value = r.D;
-        prefPct.value = r.P;
-        prefHyd.value = r.PH;
-        prefYeastPct.value = r.PY;
-        waterPct.value = r.W;
-        saltPct.value = r.S;
-        yeastPct.value = r.Y;
+        prefPct.value         = r.P;
+        prefHyd.value         = r.PH;
+        prefYeastPct.value    = r.PY;
+        waterPct.value        = r.W;
+        saltPct.value         = r.S;
+        yeastPct.value        = r.Y;
+        // Aktivera fördeg om recept har data
+        const hasPref = Number(r.P) > 0;
+        usePref.checked = hasPref;
+        usePref.dispatchEvent(new Event("change"));
         recalc();
       });
 
