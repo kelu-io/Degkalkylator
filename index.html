@@ -9,7 +9,7 @@
        Reset & Base
     ============================ */
     html, body {
-      height: 100%;
+      min-height: 100%;
       margin: 0;
       padding: 0;
       font-family: -apple-system, system-ui, sans-serif;
@@ -17,6 +17,12 @@
       color: #f2f2f7;
       padding: 20px;
       transition: background 0.3s, color 0.3s;
+    }
+    body {
+      min-height: 100vh;
+      margin: 0;
+      padding: 20px;
+      background: inherit;
     }
 
     /* =============================
@@ -96,6 +102,7 @@
     /* =============================
        Light mode
     ============================ */
+    html.light { background: #f2f2f7; }
     body.light { background: #f2f2f7; color: #000; }
     body.light .container { background: #fff; }
     body.light label, body.light p, body.light strong { color: #000; }
@@ -106,9 +113,6 @@
     body.light #settingsPanel button, body.light #settingsPanel select { background:#f2f2f7; border:1px solid #ccc; color:#000; }
     body.light #settingsPanel button:hover, body.light #settingsPanel select:hover { background:#e0e0e0; }
     body.light #recipeSelect { background:#fff; color:#000; border:1px solid #ccc; }
-    
-    /* Fix: iOS / mobile viewport background */
-    body { background-attachment: fixed !important; }
   </style>
 </head>
 
