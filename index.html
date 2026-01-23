@@ -226,6 +226,36 @@
 
   <script>
     document.addEventListener("DOMContentLoaded", () => {
+
+      // --- App PIN-skydd ---
+      (() => {
+        const APP_PIN = "1234";
+        // redan godkänd?
+        if (localStorage.getItem("appAuthorized") === "1") return;
+        const pin = prompt("🔒 Ange PIN-kod");
+        if (pin !== APP_PIN) {
+          document.body.innerHTML = `
+            <div style="
+              display:flex;
+              align-items:center;
+              justify-content:center;
+              height:100vh;
+              font-family:-apple-system,system-ui,sans-serif;
+              background:#0f0f12;
+              color:#fff;
+              text-align:center;
+            ">
+              <div>
+                <h2>⛔ Åtkomst nekad</h2>
+                <p>Fel PIN-kod</p>
+              </div>
+            </div>
+          `;
+          return;
+        }
+        localStorage.setItem("appAuthorized", "1");
+      })();
+
       // --- Elements ---
       const totalDoughInput = document.getElementById("totalDoughInput");
       const prefPct = document.getElementById("prefPct");
