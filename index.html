@@ -118,14 +118,14 @@
     body.light input { background:#fff; color:#000; border:1px solid #ccc; }
     body.light hr { border-top:1px solid #ccc; }
     body.light .settings-panel { background:#f2f2f7; }
-	body.light .settings-panel h2 { color:#666; }
+  	body.light .settings-panel h2 { color:#666; }
     body.light .settings-panel h4 { color:#666; }
     body.light #settingsPanel button, body.light #settingsPanel select { background:#f2f2f7; border:1px solid #ccc; color:#000; }
     body.light #settingsPanel button:hover, body.light #settingsPanel select:hover { background:#e0e0e0; }
     body.light .switch { background: #d1d1d6; }
     body.light .toggle-row input:checked + .switch { background: #34c759; }
     body.light .switch::after { background: #ffffff; }
-	body.light #recipeSelect { background:#fff; color:#000; border:1px solid #ccc; appearance:none; -webkit-appearance:none; }
+  	body.light #recipeSelect { background:#fff; color:#000; border:1px solid #ccc; appearance:none; -webkit-appearance:none; }
 
   </style>
 </head>
@@ -229,11 +229,11 @@
       <input type="number" id="saltPct" value="2.5">
       <label>Jäst (%)</label>
       <input type="number" id="yeastPct" value="1.0">
-	  <section id="flourMixSection" class="collapsed">
+  	  <section id="flourMixSection" class="collapsed">
         <label>Mjölmix - delmängd av mjöl (%)</label>
         <input type="number" id="flourMixPct" value="0" min="0" max="50">
-		<p>🌾 Mjölmix: <strong id="flourMix"></strong> g</p>
-	  </section>
+    		<p>🌾 Mjölmix: <strong id="flourMix"></strong> g</p>
+  	  </section>
       <p>🌾 Mjöl: <strong><span id="mainFlour">0</span> g</strong></p>
       <p>💧 Vatten: <strong><span id="mainWater">0</span> g</strong></p>
       <p>🧂 Salt: <strong><span id="salt">0</span> g</strong></p>
@@ -287,7 +287,7 @@
       const prefPct = document.getElementById("prefPct");
       const prefHyd = document.getElementById("prefHyd");
       const prefYeastPct = document.getElementById("prefYeastPct");
-	  const flourMixPct = document.getElementById("flourMixPct");
+  	  const flourMixPct = document.getElementById("flourMixPct");
       const waterPct = document.getElementById("waterPct");
       const saltPct = document.getElementById("saltPct");
       const yeastPct = document.getElementById("yeastPct");
@@ -311,12 +311,12 @@
 
       const usePref = document.getElementById("usePref");
       const prefSection = document.getElementById("prefSection");
-	  const prefFlourEl = document.getElementById("prefFlour");
+  	  const prefFlourEl = document.getElementById("prefFlour");
       const prefWaterEl = document.getElementById("prefWater");
       const prefYeastEl = document.getElementById("prefYeast");
       const prefTotalEl = document.getElementById("prefTotal");
 	  
-	  const useFlourMix = document.getElementById("useFlourMix");
+  	  const useFlourMix = document.getElementById("useFlourMix");
       const flourMixSection = document.getElementById("flourMixSection");
       const flourMixEl  = document.getElementById("flourMix");
 
@@ -369,7 +369,7 @@
         });
       })();
 	  
-	  // --- Flour mix toggle ---
+  	  // --- Flour mix toggle ---
       (() => {
         const saved = localStorage.getItem("useFlourMix") === "1";
         useFlourMix.checked = saved;
@@ -401,7 +401,7 @@
           P:Number(prefPct.value),
           PH:Number(prefHyd.value),
           PY:Number(prefYeastPct.value),
-		  FM:Number(flourMixPct.value),
+    		  FM:Number(flourMixPct.value),
           W:Number(waterPct.value),
           S:Number(saltPct.value),
           Y:Number(yeastPct.value),
@@ -440,7 +440,7 @@
         prefPct.value         = 0;
         prefHyd.value         = 60;
         prefYeastPct.value    = 0.1;
-	    flourMixPct.value     = 0;
+  	    flourMixPct.value     = 0;
         waterPct.value        = 65;
         saltPct.value         = 2.5;
         yeastPct.value        = 1.0;
@@ -448,6 +448,10 @@
       }
 
       function refreshDropdown(){
+        // sortera alfabetiskt
+        recipes.sort((a,b)=> 
+          a.name.localeCompare(b.name,"sv", { sensitivity: "base" })
+        );
         recipeSelect.innerHTML=`<option value="">– Inget recept –</option>`;
         recipes.forEach((r,i)=> {
           const option=document.createElement("option");
@@ -461,10 +465,10 @@
         const idx = recipeSelect.value;
         if (idx === "") {
           applyDefaults();
-		  // Reset fördeg
+    		  // Reset fördeg
           usePref.checked = false;
           usePref.dispatchEvent(new Event("change"));
-	      // Reset mjölmix
+  	      // Reset mjölmix
           useFlourMix.checked = false;
           useFlourMix.dispatchEvent(new Event("change"));
           return;
@@ -475,7 +479,7 @@
         prefPct.value         = r.P;
         prefHyd.value         = r.PH;
         prefYeastPct.value    = r.PY;
-		flourMixPct.value     = r.FM;
+    		flourMixPct.value     = r.FM;
         waterPct.value        = r.W;
         saltPct.value         = r.S;
         yeastPct.value        = r.Y;
@@ -581,9 +585,9 @@
         const saved = localStorage.getItem(input.id);
         if(saved!==null) input.value=saved;
         input.addEventListener("input",()=> { 
-		  localStorage.setItem(input.id,input.value);
-		  recalc();
-		});
+  		  localStorage.setItem(input.id,input.value);
+    		  recalc();
+    		});
       });
 
       recalc();
