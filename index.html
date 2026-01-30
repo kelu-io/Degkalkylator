@@ -15,12 +15,10 @@
       font-family: -apple-system, system-ui, sans-serif;
       background: #0f0f12;
       color: #f2f2f7;
-      padding: 20px;
       transition: background 0.3s, color 0.3s;
     }
     body {
       min-height: 100vh;
-      margin: 0;
       padding: 20px;
       background: inherit;
     }
@@ -46,7 +44,7 @@
     /* =============================
        Inputs
     ============================ */
-    input { width: 60%; padding: 8px; font-size: 18px; margin-top: 6px; border-radius: 10px; border: 1px solid #3a3a3c; background: #2c2c2e; color: #ffffff; transition: all 0.3s; }
+    input { width: 40%; padding: 8px; font-size: 18px; margin-top: 6px; border-radius: 10px; border: 1px solid #3a3a3c; background: #2c2c2e; color: #ffffff; transition: all 0.3s; }
 
     /* =============================
        Toggle rows (shared)
@@ -87,10 +85,9 @@
     ============================ */
     .recipe-section { margin-top: 10px; }
     .recipe-section.collapsed { display: none; }
-    #settingsPanel button, #settingsPanel select { width: 48%; padding: 8px; font-size: 16px; border-radius: 10px; margin-top: 8px; background: #3a3a3c; border: 1px solid #3a3a3c; color: #f2f2f7; -webkit-appearance: none; cursor: pointer; transition: all 0.2s; }
-    #settingsPanel button:hover, #settingsPanel select:hover { background: #3a3a3c; }
-    #recipeSelect { width: 65%; padding: 8px; font-size: 16px; margin-top: 6px; border-radius: 10px; background: #2c2c2e; color:#fff; border:1px solid #3a3a3c; -webkit-appearance:none; appearance:none; transition: all 0.3s; }
-    #recipeNameInput { width: 90%; padding: 8px; font-size: 16px; background: #3a3a3c; }
+    #settingsPanel .settings-btn, #settingsPanel select { width: 48%; padding: 8px; font-size: 16px; border-radius: 10px; margin-top: 8px; background: #3a3a3c; border: 1px solid #3a3a3c; color: #f2f2f7; -webkit-appearance: none; cursor: pointer; transition: all 0.2s; }
+    #recipeSelect { width: 65%; padding: 8px; font-size: 16px; margin-top: 6px; border-radius: 10px; background: #3a3a3c; color:#fff; border:1px solid #3a3a3c; -webkit-appearance:none; appearance:none; transition: all 0.3s; }
+    #recipeNameInput { width: 92%; padding: 8px; font-size: 16px; background: #3a3a3c; }
 
     /* =============================
        Reset-knapp i settings
@@ -185,7 +182,7 @@
 
       <!-- Återställ data -->
       <hr>
-      <button id="resetAppBtn" class="reset-icon">
+      <button id="resetAppBtn" class="settings-btn reset-icon">
         🔄 Återställ
       </button>
     </div>
@@ -212,7 +209,7 @@
       <label>Andel av total deg (%)</label>
       <input type="number" id="prefPct" value="0">
       <label>Hydration fördeg (%)</label>
-      <input type="number" id="prefHyd" value="60">
+      <input type="number" id="prefHyd" value="100">
       <label>Jäst fördeg (%)</label>
       <input type="number" id="prefYeastPct" value="0.1" step="0.01">
       <p>🌾 Mjöl: <strong><span id="prefFlour">0</span> g</strong></p>
@@ -231,7 +228,7 @@
       <label>Jäst (%)</label>
       <input type="number" id="yeastPct" value="1.0">
   	  <section id="flourMixSection" class="collapsed">
-        <label>Mjölmix - delmängd av mjöl (%)</label>
+        <label>Mjölmix (%)</label>
         <input type="number" id="flourMixPct" value="0" min="0" max="50">
     		<p>🌾 Mjölmix: <strong id="flourMix"></strong> g</p>
   	  </section>
@@ -385,7 +382,7 @@
         });
       })();
       
-      // --- Recipe toggle ---
+      // --- Data toggle ---
       recipeToggle.addEventListener("change",()=> {
         recipeSection.classList.toggle("collapsed", !recipeToggle.checked);
       });
@@ -439,7 +436,7 @@
       function applyDefaults() {
         totalDoughInput.value = 1000;
         prefPct.value         = 0;
-        prefHyd.value         = 60;
+        prefHyd.value         = 100;
         prefYeastPct.value    = 0.1;
   	    flourMixPct.value     = 0;
         waterPct.value        = 65;
@@ -466,7 +463,7 @@
         const idx = recipeSelect.value;
         if (idx === "") {
           applyDefaults();
-    		  // Reset fördeg
+          // Reset fördeg
           usePref.checked = false;
           usePref.dispatchEvent(new Event("change"));
   	      // Reset mjölmix
@@ -476,21 +473,18 @@
         }
         const r = recipes[idx];
         if (!r) return;
-        totalDoughInput.value = r.D;
-        prefPct.value         = r.P;
-        prefHyd.value         = r.PH;
-        prefYeastPct.value    = r.PY;
-    		flourMixPct.value     = r.FM;
-        waterPct.value        = r.W;
-        saltPct.value         = r.S;
-        yeastPct.value        = r.Y;
-        // Fördeg från recept  
-        prefPct.value = Number(r.P) || 0;
+        totalDoughInput.value = Number(r.D) || 0;
+        prefPct.value         = Number(r.P) || 0;
+        prefHyd.value         = Number(r.PH) || 0;
+        prefYeastPct.value    = Number(r.PY) || 0;
+        flourMixPct.value     = Number(r.FM) || 0;
+        waterPct.value        = Number(r.W) || 0;
+        saltPct.value         = Number(r.S) || 0;
+        yeastPct.value        = Number(r.Y) || 0;
+        // toggles till fördeg/mjölmix
         const hasPref = prefPct.value > 0;
         usePref.checked = hasPref;
         usePref.dispatchEvent(new Event("change"));
-        // Mjölmix från recept
-        flourMixPct.value = Number(r.FM) || 0;
         const hasMix = flourMixPct.value > 0;
         useFlourMix.checked = hasMix;
         useFlourMix.dispatchEvent(new Event("change"));
@@ -524,7 +518,7 @@
         };
         reader.readAsText(file);
       });
-
+      
       // --- Återställ data ---
       const resetAppBtn = document.getElementById("resetAppBtn");
       function hardResetApp() {
