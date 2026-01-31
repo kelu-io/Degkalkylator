@@ -5,50 +5,22 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>🥖 Degkalkylator</title>
   <style>
-    /* =============================
-       Reset & Base
-    ============================ */
-    html, body {
-      min-height: 100%;
-      margin: 0;
-      padding: 0;
-      font-family: -apple-system, system-ui, sans-serif;
-      background: #0f0f12;
-      color: #f2f2f7;
-      transition: background 0.3s, color 0.3s;
-    }
-    body {
-      min-height: 100vh;
-      padding: 20px;
-      background: inherit;
-    }
+    /* -- Reset & Base -- */
+    html, body { min-height: 100%; margin: 0; padding: 0; font-family: -apple-system, system-ui, sans-serif; background: #0f0f12; color: #f2f2f7; transition: background 0.3s, color 0.3s; }
+    body { min-height: 100vh; padding: 20px; background: inherit; }
 
-    /* =============================
-       Layout
-    ============================ */
-    .container {
-      background: #1c1c1e;
-      padding: 20px;
-      border-radius: 14px;
-      max-width: 420px;
-      margin: auto;
-    }
+    /* -- Layout -- */
+    .container { background: #1c1c1e; padding: 20px; border-radius: 14px; max-width: 420px; margin: auto; }
 
-    /* =============================
-       Typography & Text
-    ============================ */
+    /* -- Typography & Text -- */
     label { display: block; margin-top: 12px; font-weight: 600; color: #d1d1d6; transition: color 0.3s; }
     p, strong { color: #f2f2f7; transition: color 0.3s; }
     hr { border: none; border-top: 1px solid #3a3a3c; margin: 20px 0; }
 
-    /* =============================
-       Inputs
-    ============================ */
+    /* -- Inputs -- */
     input { width: 60%; padding: 8px; font-size: 18px; margin-top: 6px; border-radius: 10px; border: 1px solid #3a3a3c; background: #2c2c2e; color: #ffffff; transition: all 0.3s; }
 
-    /* =============================
-       Toggle rows (shared)
-    ============================ */
+    /* -- Toggle rows (shared) -- */
     .toggle-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; }
     .toggle-row input { display: none; }
     .switch { width: 46px; height: 26px; background: #4a4a4c; border-radius: 13px; position: relative; cursor: pointer; }
@@ -56,22 +28,16 @@
     .toggle-row input:checked + .switch { background: #34c759; }
     .toggle-row input:checked + .switch::after { transform: translateX(20px); }
 
-    /* =============================
-       Fördeg (collapse)
-    ============================ */
+    /* -- Fördeg (collapse) -- */
     #prefSection { overflow: hidden; max-height: 2000px; opacity: 1; transition: max-height 0.35s ease, opacity 0.25s ease; }
     #prefSection.collapsed { max-height: 0; opacity: 0; pointer-events: none; }
 
-    /* =============================
-       Mjölmix (collapse)
-    ============================ */
+    /* -- Mjölmix (collapse) -- */
     #flourMixSection { overflow: hidden; max-height: 2000px; opacity: 1; transition: max-height 0.35s ease, opacity 0.25s ease; }
     #flourMixSection.collapsed { max-height: 0; opacity: 0; pointer-events: none; }
     #flourMixSection p { margin-bottom: 0; }
 
-    /* =============================
-       Settings
-    ============================ */
+    /* -- Settings -- */
     #settingsBtn { background: none; border: none; font-size: 22px; cursor: pointer; float: right; margin-top: -26px; margin-right: -12px; }
     .settings-panel { margin-top: 14px; padding: 16px; border-radius: 14px; background: #2c2c2e; display: none; animation: settingsFade 0.25s ease-out; }
     .settings-panel.open { display: block; }
@@ -80,34 +46,17 @@
     .settings-panel h4 { margin: 14px 0 6px; font-size: 13px; color: #b0b0b5; text-transform: uppercase; letter-spacing: 0.04em; }
     @keyframes settingsFade { from { opacity:0; transform:translateY(-6px);} to {opacity:1; transform:translateY(0);} }
 
-    /* =============================
-       Recipe
-    ============================ */
+    /* -- Recipe -- */
     .recipe-section { margin-top: 10px; }
     .recipe-section.collapsed { display: none; }
     #settingsPanel .settings-btn, #settingsPanel select { width: 48%; padding: 8px; font-size: 16px; border-radius: 10px; margin-top: 8px; background: #3a3a3c; border: 1px solid #3a3a3c; color: #f2f2f7; -webkit-appearance: none; cursor: pointer; transition: all 0.2s; }
     #recipeSelect { width: 65%; padding: 8px; font-size: 16px; margin-top: 6px; border-radius: 10px; background: #3a3a3c; color:#fff; border:1px solid #3a3a3c; -webkit-appearance:none; appearance:none; transition: all 0.3s; }
     #recipeNameInput { width: 92%; padding: 8px; font-size: 16px; background: #3a3a3c; }
 
-    /* =============================
-       Reset-knapp i settings
-    ============================ */
-    .reset-icon {
-      display: block;
-      margin: 20px auto;
-      font-size: 26px;
-      color: #ff3b30 !important;
-      background: #3a3a3c;
-      border: 1px solid #3a3a3c;
-      border-radius: 12px;
-      cursor: pointer;
-      text-align: center;
-      transition: transform 0.15s ease, opacity 0.15s ease;
-    }
+    /* -- Reset-knapp i settings -- */
+    .reset-icon { display: block; margin: 20px auto; font-size: 26px; color: #ff3b30 !important; background: #3a3a3c; border: 1px solid #3a3a3c; border-radius: 12px; cursor: pointer; text-align: center; transition: transform 0.15s ease, opacity 0.15s ease; }
 
-    /* =============================
-       Light mode
-    ============================ */
+    /* -- Light mode -- */
     html.light { background: #f2f2f7; }
     body.light { background: #f2f2f7; color: #000; }
     body.light .container { background: #fff; }
@@ -251,7 +200,7 @@
   <script>
     document.addEventListener("DOMContentLoaded",()=> {
       
-      // --- App PIN-skydd ---
+      // -- App PIN-skydd --
       (() => {
         const APP_PIN = "1234";
         // redan godkänd?
@@ -280,7 +229,7 @@
         localStorage.setItem("appAuthorized", "1");
       })();
 
-      // --- Elements ---
+      // -- Elements --
       const totalDoughInput = document.getElementById("totalDoughInput");
       const prefPct = document.getElementById("prefPct");
       const prefHyd = document.getElementById("prefHyd");
@@ -328,10 +277,10 @@
       const importBtn = document.getElementById("importRecipesBtn");
       const importInput = document.getElementById("importRecipesInput");
 
-      // --- Settings toggle ---
+      // -- Settings toggle --
       settingsBtn.addEventListener("click",()=> settingsPanel.classList.toggle("open"));
 
-      // --- Theme ---
+      // -- Theme --
       (() => {
         const savedTheme = localStorage.getItem("theme") || "dark";
         applyTheme(savedTheme);
@@ -352,7 +301,7 @@
         }
       })();
 
-      // --- Pref toggle ---
+      // -- Pref toggle --
       (() => {
         const savedPref = localStorage.getItem("usePref") === "1";
         usePref.checked = savedPref;
@@ -367,7 +316,7 @@
         });
       })();
 	  
-  	  // --- Flour mix toggle ---
+  	  // -- Flour mix toggle --
       (() => {
         const saved = localStorage.getItem("useFlourMix") === "1";
         useFlourMix.checked = saved;
@@ -382,12 +331,12 @@
         });
       })();
       
-      // --- Data toggle ---
+      // -- Data toggle --
       recipeToggle.addEventListener("change",()=> {
         recipeSection.classList.toggle("collapsed", !recipeToggle.checked);
       });
 
-      // --- Recipes ---
+      // -- Recipes --
       let recipes = JSON.parse(localStorage.getItem("recipes")||"[]");
       if(!Array.isArray(recipes)) recipes=[];
       refreshDropdown();
@@ -519,7 +468,7 @@
         reader.readAsText(file);
       });
       
-      // --- Återställ data ---
+      // -- Återställ data --
       const resetAppBtn = document.getElementById("resetAppBtn");
       function hardResetApp() {
         const ok = confirm("Återställ appen helt till grundläge?\nAll lokal data raderas, recept etc.");
@@ -529,7 +478,7 @@
       }
       resetAppBtn.addEventListener("click", hardResetApp);
       
-      // --- Recalc ---
+      // -- Recalc --
       function recalc(){
         const D  = Number(totalDoughInput.value); if(!D || D<=0)return;
         const P  = Number(prefPct.value)/100;
@@ -575,7 +524,7 @@
         totalCheckEl.textContent = Math.round(prefTotal+mainTotal);
       }
 
-      // --- Persist inputs ---
+      // -- Persist inputs --
       inputs.forEach(input=>{
         const saved = localStorage.getItem(input.id);
         if(saved!==null) input.value=saved;
