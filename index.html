@@ -18,7 +18,7 @@
     hr { border: none; border-top: 1px solid #3a3a3c; margin: 20px 0; }
 
     /* -- Inputs -- */
-    input { width: 60%; padding: 8px; font-size: 18px; margin-top: 6px; border-radius: 10px; border: 1px solid #3a3a3c; background: #2c2c2e; color: #ffffff; transition: all 0.3s; }
+    input { width: 58%; padding: 8px; font-size: 18px; margin-top: 6px; border-radius: 10px; border: 1px solid #3a3a3c; background: #2c2c2e; color: #ffffff; transition: all 0.3s; }
 
     /* -- Toggle rows (shared) -- */
     .toggle-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; }
@@ -38,7 +38,7 @@
     #flourMixSection p { margin-bottom: 0; }
 
     /* -- Settings -- */
-    #settingsBtn { background: none; border: none; font-size: 22px; cursor: pointer; float: right; margin-top: -26px; margin-right: -12px; }
+    #settingsBtn { background: none; border: none; font-size: 26px; cursor: pointer; float: right; margin-top: -26px; margin-right: -12px; }
     .settings-panel { margin-top: 14px; padding: 16px; border-radius: 14px; background: #2c2c2e; display: none; animation: settingsFade 0.25s ease-out; }
     .settings-panel.open { display: block; }
     .settings-panel h2 { margin: 0 0 4px; font-size: 15px; color: #b0b0b5; }
@@ -52,7 +52,26 @@
     #settingsPanel .settings-btn, #settingsPanel select { width: 48%; padding: 8px; font-size: 16px; border-radius: 10px; margin-top: 8px; background: #3a3a3c; border: 1px solid #3a3a3c; color: #f2f2f7; -webkit-appearance: none; cursor: pointer; transition: all 0.2s; }
     #recipeSelect { width: 65%; padding: 8px; font-size: 16px; margin-top: 6px; border-radius: 10px; background: #3a3a3c; color:#fff; border:1px solid #3a3a3c; -webkit-appearance:none; appearance:none; transition: all 0.3s; }
     #recipeNameInput { width: 92%; padding: 8px; font-size: 16px; background: #3a3a3c; }
+    
+    /* -- Recipe popup (modal) -- */
+    .settings-btn { width: 48%; padding: 8px; font-size: 16px; border-radius: 10px; background: #3a3a3c; border: 1px solid #3a3a3c; color: #f2f2f7; cursor: pointer; }
+    #recipePopup { display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -35%); background: #2c2c2e; padding: 20px; border-radius: 14px; width: 232px; z-index: 1000; box-shadow: 0 6px 20px rgba(0,0,0,0.5); }
+	#recipeSelect { width: 100%; }
+    .recipePopupBtn { background: none; border: none; padding: 0; font-size: 16px; font-weight: 600; color: #d1d1d6; cursor: pointer; }
+	#recipePopup.open { display: block; }
+    .icon-btn { background: none; border: none; font-size: 14px; cursor: pointer; padding: 0; color: inherit; }
+	.popup-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
+    .popup-header h3 { margin: 0; }
+    .popup-actions { display: flex; justify-content: space-between; margin-top: 10px; }
+    .popup-row { display:flex; justify-content:space-between; margin-top:10px; }
 
+    /* -- Toggle-stil vid knapp tryck -- */
+    .toggle-btn { display: inline-block; cursor: pointer; user-select: none; margin: 8px 4px 0 0; }
+    .toggle-ui { display: inline-flex; align-items: center; gap: 6px; padding: 6px 10px; border-radius: 10px; border: 0.5px solid #3a3a3c; background: #3a3a3c; font-size: 14px; }
+    /* Aktiv: grön kant */
+    .toggle-btn input:checked + .toggle-ui,
+    .toggle-ui.active { border-color: #34c759; box-shadow: 0 0 0 1px #34c759 inset; }
+    
     /* -- Reset-knapp i settings -- */
     .reset-icon { display: block; margin: 20px auto; font-size: 26px; color: #ff3b30 !important; background: #3a3a3c; border: 1px solid #3a3a3c; border-radius: 12px; cursor: pointer; text-align: center; transition: transform 0.15s ease, opacity 0.15s ease; }
 
@@ -73,6 +92,14 @@
     body.light .switch::after { background: #ffffff; }
   	body.light #recipeSelect { background:#f2f2f7; color:#000; border:1px solid #ccc; appearance:none; -webkit-appearance:none; }
     body.light #recipeNameInput { background: #f9f9f9; width: 90%; padding: 8px; font-size: 16px; }
+    body.light #recipePopup { background: #ffffff; box-shadow: 0 6px 20px rgba(0,0,0,0.2); color: #000; }
+	body.light #recipePopup button,
+	body.light #recipePopup select,
+	body.light #recipePopup input { background: #f9f9f9; border: 1px solid #ccc; color: #000; }
+	body.light #recipePopup button:hover { background: #e0e0e0; }
+    body.light .recipePopupBtn { color: #000; }
+	body.light .toggle-ui { background: #f9f9f9; border-color: #ccc; color: #000; }
+    body.light .toggle-btn input:checked + .toggle-ui, body.light .toggle-ui.active { border-color: #34c759; box-shadow: 0 0 0 1px #34c759 inset; }
 
   </style>
 </head>
@@ -97,32 +124,14 @@
 
       <hr>
 
-      <h4>Beräkning</h4>
-      <label class="toggle-row">
-        <span>🥣 Använd fördeg</span>
-        <input type="checkbox" id="usePref"><span class="switch"></span>
-      </label>
-
-      <label class="toggle-row">
-        <span>🌾 Mjölmix</span>
-        <input type="checkbox" id="useFlourMix"><span class="switch"></span>
-      </label>
-
-      <hr>
-
       <h4>Data</h4>
       <label class="toggle-row">
-        <span>📖 Recept</span>
-        <input type="checkbox" id="recipeToggle"><span class="switch"></span>
+        <span>💾 Backup</span>
+        <input type="checkbox" id="backupToggle"><span class="switch"></span>
       </label>
 
-      <!-- Recept -->
-      <div id="recipeSection" class="recipe-section collapsed">
-        <h2>Skapa dina recept lokalt:</h2>
-        <input type="text" id="recipeNameInput" placeholder="Namn på recept...">
-        <button id="saveRecipeBtn" class="settings-btn">💾 Spara</button>
-        <button id="deleteRecipeBtn" class="settings-btn">🗑 Radera</button>
-        <hr>
+      <!-- Backup recept -->
+      <div id="backupSection" class="recipe-section collapsed">
         <h2>Spara backup av dina recept:</h2>
         <button id="exportRecipesBtn" class="settings-btn">📤 Spara</button>
         <input type="file" id="importRecipesInput" accept=".json" style="display:none;">
@@ -136,16 +145,45 @@
       </button>
     </div>
 
-    <!-- Välj recept -->
-    <section id="recipeSelectorSection">
-      <label>
-        📂 Välj recept
-        <select id="recipeSelect">
-          <option value="">– Inget recept –</option>
-        </select>
-      </label>
+    <!-- Recept-popup trigger -->
+    <section id="recipePopupSection">
+      <div class="popup-row">
+    	<button id="recipePopupBtn" class="recipePopupBtn toggle-ui">📖 Recept</button>
+      </div>
     </section>
 
+    <!-- Recept-popup -->
+    <div id="recipePopup" class="modal">
+      <div class="popup-header">
+        <h3>Recept</h3>
+        <button id="closeRecipePopup" class="icon-btn">❌</button>
+      </div>
+      <label>Välj recept</label>
+      <select id="recipeSelect">
+        <option value="">– Inget recept –</option>
+      </select>
+	  
+	  <hr>
+	  
+      <label>Skapa recept lokalt:</label>
+      <input type="text" id="recipeNameInput" placeholder="Namn på recept...">
+
+      <div style="display:flex; justify-content:space-between; margin-top:10px;">
+        <button id="saveRecipeBtn" class="settings-btn">💾 Spara</button>
+        <button id="deleteRecipeBtn" class="settings-btn">🗑 Radera</button>
+      </div>
+    </div>
+    
+    <label class="toggle-btn">
+      <input type="checkbox" id="usePref" hidden>
+      <span class="toggle-ui">🥣 Fördeg</span>
+    </label>
+
+    <label class="toggle-btn">
+      <input type="checkbox" id="useFlourMix" hidden>
+      <span class="toggle-ui">🌾 Mjölmix</span>
+    </label>
+   
     <!-- Inputs -->
     <section class="base-inputs">
       <label>⚖️ Total degvikt (g)</label>
@@ -267,7 +305,12 @@
       const flourMixSection = document.getElementById("flourMixSection");
       const flourMixEl  = document.getElementById("flourMix");
 
-      const recipeToggle = document.getElementById("recipeToggle");
+	  const backupToggle = document.getElementById("backupToggle");
+      const backupSection = document.getElementById("backupSection");
+	  
+	  const recipePopup = document.getElementById("recipePopup");
+      const recipePopupBtn = document.getElementById("recipePopupBtn");
+      const closeRecipePopup = document.getElementById("closeRecipePopup");
       const recipeSelect = document.getElementById("recipeSelect");
 
       const recipeNameInput = document.getElementById("recipeNameInput");
@@ -332,8 +375,8 @@
       })();
       
       // -- Data toggle --
-      recipeToggle.addEventListener("change",()=> {
-        recipeSection.classList.toggle("collapsed", !recipeToggle.checked);
+      backupToggle.addEventListener("change",()=> {
+        backupSection.classList.toggle("collapsed", !backupToggle.checked);
       });
 
       // -- Recipes --
@@ -348,7 +391,7 @@
           P:Number(prefPct.value),
           PH:Number(prefHyd.value),
           PY:Number(prefYeastPct.value),
-    		  FM:Number(flourMixPct.value),
+    	  FM:Number(flourMixPct.value),
           W:Number(waterPct.value),
           S:Number(saltPct.value),
           Y:Number(yeastPct.value),
@@ -380,6 +423,12 @@
         localStorage.setItem("recipes",JSON.stringify(recipes));
         refreshDropdown();
         recipeSelect.value="";
+        // Återställ när valt recept raderas
+        applyDefaults();
+        usePref.checked = false;
+        usePref.dispatchEvent(new Event("change"));
+        useFlourMix.checked = false;
+        useFlourMix.dispatchEvent(new Event("change"));
       });
 
       function applyDefaults() {
@@ -407,6 +456,17 @@
           recipeSelect.appendChild(option);
         });
       }
+	  
+	  // -- Recipes popup --
+      recipePopupBtn.addEventListener("click", () => {
+        recipePopup.classList.toggle("open");
+        recipePopupBtn.classList.toggle("active", recipePopup.classList.contains("open"));
+      });
+      closeRecipePopup.addEventListener("click", () => {
+        recipePopup.classList.remove("open");
+        recipePopupBtn.classList.remove("active");
+      });
+	  if (recipePopup.classList.contains("open")) refreshDropdown();
 
       recipeSelect.addEventListener("change",()=> {
         const idx = recipeSelect.value;
