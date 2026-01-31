@@ -62,12 +62,17 @@
     .icon-btn { background: none; border: none; font-size: 14px; cursor: pointer; padding: 0; color: inherit; }
 	.popup-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
     .popup-header h3 { margin: 0; }
-    .popup-actions { display: flex; justify-content: space-between; margin-top: 10px; }
-    .popup-row { display:flex; justify-content:space-between; margin-top:10px; }
-
-    /* -- Toggle-stil vid knapp tryck -- */
-    .toggle-btn { display: inline-block; cursor: pointer; user-select: none; margin: 8px 4px 0 0; }
-    .toggle-ui { display: inline-flex; align-items: center; gap: 6px; padding: 6px 10px; border-radius: 10px; border: 0.5px solid #3a3a3c; background: #3a3a3c; font-size: 14px; }
+	
+	/* -- Notes popup (modal) -- */
+    #notesPopup { display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -70%); background: #2c2c2e; padding: 20px; border-radius: 14px; width: 232px; z-index: 1000; box-shadow: 0 6px 20px rgba(0,0,0,0.5); }
+	#notesPopup.open { display: block; }
+	#notesInput { width: 90%; height: 120px; padding: 8px; border-radius: 10px; border: 1px solid #3a3a3c; background: #3a3a3c; color: #f2f2f2; font-size: 14px; resize: none; }
+	
+	 /* -- Toggle-stil vid knapp tryck -- */
+    .toggle-btn { display: inline-block; cursor: pointer; user-select: none; margin: 2px 2px 0 0 0; }
+    .toggle-ui { display: inline-flex; align-items: center; gap: 6px; padding: 6px 8px; border-radius: 10px; border: 0.5px solid #3a3a3c; background: #3a3a3c; font-size: 14px; }
+    .action-row { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-top: 2px; }
+    .action-row .toggle-ui { display: inline-flex; align-items: center; gap: 6px; }
     /* Aktiv: grön kant */
     .toggle-btn input:checked + .toggle-ui,
     .toggle-ui.active { border-color: #34c759; box-shadow: 0 0 0 1px #34c759 inset; }
@@ -98,6 +103,8 @@
 	body.light #recipePopup input { background: #f9f9f9; border: 1px solid #ccc; color: #000; }
 	body.light #recipePopup button:hover { background: #e0e0e0; }
     body.light .recipePopupBtn { color: #000; }
+	body.light #notesPopup { background: #ffffff; box-shadow: 0 6px 20px rgba(0,0,0,0.2); color: #000; }
+    body.light #notesInput { background: #f9f9f9; border: 1px solid #ccc; color: #000; }
 	body.light .toggle-ui { background: #f9f9f9; border-color: #ccc; color: #000; }
     body.light .toggle-btn input:checked + .toggle-ui, body.light .toggle-ui.active { border-color: #34c759; box-shadow: 0 0 0 1px #34c759 inset; }
 
@@ -145,12 +152,26 @@
       </button>
     </div>
 
-    <!-- Recept-popup trigger -->
-    <section id="recipePopupSection">
-      <div class="popup-row">
-    	<button id="recipePopupBtn" class="recipePopupBtn toggle-ui">📖 Recept</button>
-      </div>
-    </section>
+	<!-- Rad 1: Innehåll -->
+	<section class="action-row">
+	  <button id="recipePopupBtn" class="recipePopupBtn toggle-ui" type="button">
+	    📖 Recept
+	  </button>
+	  <button id="notesPopupBtn" class="recipePopupBtn toggle-ui" type="button">
+	    📝 Notiser
+	  </button>
+	</section>
+	<!-- Rad 2: Beräkningslägen -->
+	<section class="action-row">
+	  <label class="toggle-btn">
+	    <input type="checkbox" id="usePref" hidden>
+	    <span class="toggle-ui">🥣 Fördeg</span>
+	  </label>
+	  <label class="toggle-btn">
+	    <input type="checkbox" id="useFlourMix" hidden>
+	    <span class="toggle-ui">🌾 Mjölmix</span>
+	  </label>
+	</section>
 
     <!-- Recept-popup -->
     <div id="recipePopup" class="modal">
@@ -162,27 +183,27 @@
       <select id="recipeSelect">
         <option value="">– Inget recept –</option>
       </select>
-	  
 	  <hr>
-	  
       <label>Skapa recept lokalt:</label>
       <input type="text" id="recipeNameInput" placeholder="Namn på recept...">
-
       <div style="display:flex; justify-content:space-between; margin-top:10px;">
         <button id="saveRecipeBtn" class="settings-btn">💾 Spara</button>
         <button id="deleteRecipeBtn" class="settings-btn">🗑 Radera</button>
       </div>
     </div>
-    
-    <label class="toggle-btn">
-      <input type="checkbox" id="usePref" hidden>
-      <span class="toggle-ui">🥣 Fördeg</span>
-    </label>
+	
+	<!-- Noteringar-popup -->
+	<div id="notesPopup" class="modal">
+	  <div class="popup-header">
+	    <h3>Anteckningar</h3>
+	    <button id="closeNotesPopup" class="icon-btn">❌</button>
+	  </div>
+	  <textarea id="notesInput" placeholder="Skriv noteringar..."></textarea>
+	  <div class="popup-actions">
+	    <button id="saveNotesBtn" class="settings-btn">💾 Spara</button>
+	  </div>
+	</div>
 
-    <label class="toggle-btn">
-      <input type="checkbox" id="useFlourMix" hidden>
-      <span class="toggle-ui">🌾 Mjölmix</span>
-    </label>
    
     <!-- Inputs -->
     <section class="base-inputs">
@@ -312,6 +333,12 @@
       const recipePopupBtn = document.getElementById("recipePopupBtn");
       const closeRecipePopup = document.getElementById("closeRecipePopup");
       const recipeSelect = document.getElementById("recipeSelect");
+	  
+	  const notesPopupBtn = document.getElementById("notesPopupBtn");
+      const notesPopup = document.getElementById("notesPopup");
+      const closeNotesPopup = document.getElementById("closeNotesPopup");
+	  const notesInput = document.getElementById("notesInput");
+      const saveNotesBtn = document.getElementById("saveNotesBtn");
 
       const recipeNameInput = document.getElementById("recipeNameInput");
       const saveRecipeBtn = document.getElementById("saveRecipeBtn");
@@ -321,6 +348,7 @@
       const importInput = document.getElementById("importRecipesInput");
 
       // -- Settings toggle --
+	  let bulkUpdating = false;
       settingsBtn.addEventListener("click",()=> settingsPanel.classList.toggle("open"));
 
       // -- Theme --
@@ -355,7 +383,7 @@
           prefSection.classList.toggle("collapsed",!on);
           if(!on) prefPct.value=0;
           localStorage.setItem("usePref",on?"1":"0");
-          recalc();
+          if (!bulkUpdating) recalc();
         });
       })();
 	  
@@ -370,7 +398,7 @@
           flourMixSection.classList.toggle("collapsed", !on);
           if (!on) flourMixPct.value = 0;
           localStorage.setItem("useFlourMix", on ? "1" : "0");
-          recalc();
+          if (!bulkUpdating) recalc();
         });
       })();
       
@@ -386,6 +414,9 @@
       saveRecipeBtn.addEventListener("click",()=> {
         const name = recipeNameInput.value.trim();
         if(!name)return alert("Skriv ett namn på receptet!");
+		const index = recipes.findIndex(r =>
+          r.name.toLowerCase() === name.toLowerCase()
+        );
         const newRecipe = {
           D:Number(totalDoughInput.value),
           P:Number(prefPct.value),
@@ -395,11 +426,9 @@
           W:Number(waterPct.value),
           S:Number(saltPct.value),
           Y:Number(yeastPct.value),
-          name
+          name,
+		  note: index !== -1 ? (recipes[index].note || "") : ""
         };
-        const index = recipes.findIndex(r =>
-          r.name.toLowerCase() === name.toLowerCase()
-        );
         if (index !== -1) {
           const ok = confirm(`"${name}" finns redan.\nVill du skriva över receptet?`);
           if (!ok) return;
@@ -444,6 +473,7 @@
       }
 
       function refreshDropdown(){
+        const keep = recipeSelect.value; // spara vald
         // sortera alfabetiskt
         recipes.sort((a,b)=> 
           a.name.localeCompare(b.name,"sv", { sensitivity: "base" })
@@ -455,33 +485,39 @@
           option.textContent=r.name;
           recipeSelect.appendChild(option);
         });
+        recipeSelect.value = keep; // återställ vald
       }
 	  
 	  // -- Recipes popup --
       recipePopupBtn.addEventListener("click", () => {
         recipePopup.classList.toggle("open");
         recipePopupBtn.classList.toggle("active", recipePopup.classList.contains("open"));
+		if (recipePopup.classList.contains("open")) refreshDropdown();
       });
       closeRecipePopup.addEventListener("click", () => {
         recipePopup.classList.remove("open");
         recipePopupBtn.classList.remove("active");
       });
-	  if (recipePopup.classList.contains("open")) refreshDropdown();
-
-      recipeSelect.addEventListener("change",()=> {
+	  
+	  recipeSelect.addEventListener("change",() => {
         const idx = recipeSelect.value;
+        bulkUpdating = true;
         if (idx === "") {
           applyDefaults();
           // Reset fördeg
           usePref.checked = false;
           usePref.dispatchEvent(new Event("change"));
-  	      // Reset mjölmix
+          // Reset mjölmix
           useFlourMix.checked = false;
           useFlourMix.dispatchEvent(new Event("change"));
+          bulkUpdating = false;
+          recalc();
+          if (notesPopup.classList.contains("open")) loadNoteIntoTextarea();
+          updateNotesIndicator();
           return;
         }
         const r = recipes[idx];
-        if (!r) return;
+        if (!r) { bulkUpdating = false; return; }
         totalDoughInput.value = Number(r.D) || 0;
         prefPct.value         = Number(r.P) || 0;
         prefHyd.value         = Number(r.PH) || 0;
@@ -491,15 +527,69 @@
         saltPct.value         = Number(r.S) || 0;
         yeastPct.value        = Number(r.Y) || 0;
         // toggles till fördeg/mjölmix
-        const hasPref = prefPct.value > 0;
-        usePref.checked = hasPref;
+        usePref.checked = prefPct.value > 0;
         usePref.dispatchEvent(new Event("change"));
-        const hasMix = flourMixPct.value > 0;
-        useFlourMix.checked = hasMix;
+        useFlourMix.checked = flourMixPct.value > 0;
         useFlourMix.dispatchEvent(new Event("change"));
+        bulkUpdating = false;
         recalc();
+        if (notesPopup.classList.contains("open")) loadNoteIntoTextarea();
+        updateNotesIndicator();
       });
 
+      // -- Anteckningar popup --
+      function getSelectedRecipeIndex() {
+        const idx = recipeSelect.value;
+        if (idx === "") return null;
+        const n = Number(idx);
+        return Number.isFinite(n) ? n : null;
+      }
+      function loadNoteIntoTextarea() {
+        const idx = getSelectedRecipeIndex();
+        if (idx === null || !recipes[idx]) {
+          notesInput.value = "";
+          return;
+        }
+        notesInput.value = recipes[idx].note || "";
+      }
+      function saveNoteFromTextarea() {
+        const idx = getSelectedRecipeIndex();
+        if (idx === null || !recipes[idx]) return false;
+        recipes[idx].note = notesInput.value.trim();
+        localStorage.setItem("recipes", JSON.stringify(recipes));
+        return true;
+      }
+      function updateNotesIndicator() {
+        const idx = getSelectedRecipeIndex();
+        const hasNote = idx !== null && recipes[idx] && (recipes[idx].note || "").trim().length > 0;
+        const open = notesPopup.classList.contains("open");
+        notesPopupBtn.classList.toggle("active", open || hasNote);
+      }
+      // Öppna anteckningar: kräver valt recept
+      notesPopupBtn.addEventListener("click", () => {
+        const idx = getSelectedRecipeIndex();
+        if (idx === null) {
+          alert("Välj ett recept först.");
+          return;
+        }
+        loadNoteIntoTextarea();
+        notesPopup.classList.toggle("open");
+        updateNotesIndicator();
+      });
+      // Stäng anteckningar
+      closeNotesPopup.addEventListener("click", () => {
+        notesPopup.classList.remove("open");
+        updateNotesIndicator();
+      });
+      // Spara anteckning
+      saveNotesBtn.addEventListener("click", () => {
+        const ok = saveNoteFromTextarea();
+        if (!ok) return;
+        notesPopup.classList.remove("open");
+        updateNotesIndicator();
+      });
+
+      // Spara/exportera recept
       exportBtn.addEventListener("click",()=> {
         if(!recipes.length)return alert("Inga recept att exportera!");
         const blob=new Blob([JSON.stringify(recipes,null,2)],{type:"application/json"});
@@ -509,8 +599,8 @@
         URL.revokeObjectURL(url);
       });
 
+      // Ladda/importera recept
       importBtn.addEventListener("click",()=> importInput.click());
-
       importInput.addEventListener("change",e=>{
         const file = e.target.files[0];
         if(!file)return;
@@ -585,13 +675,17 @@
       }
 
       // -- Persist inputs --
-      inputs.forEach(input=>{
+      let saveTimer = null;
+      inputs.forEach(input=> {
         const saved = localStorage.getItem(input.id);
         if(saved!==null) input.value=saved;
-        input.addEventListener("input",()=> { 
-  		  localStorage.setItem(input.id,input.value);
-    		  recalc();
-    		});
+        input.addEventListener("input",()=> {
+          recalc();
+          clearTimeout(saveTimer);
+          saveTimer = setTimeout(()=> {
+            localStorage.setItem(input.id, input.value);
+          }, 200);
+        });
       });
 
       recalc();
