@@ -69,12 +69,12 @@
 	
 	 /* -- Toggle-stil vid knapp tryck -- */
     .toggle-btn { display: inline-block; cursor: pointer; user-select: none; margin: 0; }
-    .toggle-ui { display: inline-flex; align-items: center; gap: 6px; padding: 6px 8px; border-radius: 10px; border: 0.5px solid #3a3a3c; background: #3a3a3c; color: #d1d1d6; font-size: 14px; font-weight: 600; }
+    .toggle-ui { display: inline-flex; align-items: center; gap: 6px; padding: 6px 8px; border-radius: 10px; border: 1px solid #3a3a3c; background: #2c2c2e; color: #d1d1d6; font-size: 14px; font-weight: 600; }	
     .action-row { display: flex; align-items: center; gap: 8px; margin-top: 8px; flex-wrap: nowrap; }
     .action-row .toggle-ui { display: inline-flex; align-items: center; gap: 6px; }
     /* Aktiv: grön kant */
     .toggle-btn input:checked + .toggle-ui,
-    .toggle-ui.active { border-color: #34c759; box-shadow: 0 0 0 1px #34c759 inset; }
+    .toggle-ui.active { box-shadow: 0 0 0 2px rgba(10,132,255,0.5); }
     
     /* -- Reset-knapp i settings -- */
     .reset-icon { display: block; margin: 20px auto; font-size: 26px; color: #ff3b30 !important; background: #3a3a3c; border: 1px solid #3a3a3c; border-radius: 12px; cursor: pointer; text-align: center; transition: transform 0.15s ease, opacity 0.15s ease; }
@@ -91,6 +91,8 @@
     body.light .settings-panel h4 { color:#666; }
     body.light #settingsPanel button, body.light #settingsPanel select { background:#f9f9f9; border:1px solid #ccc; color:#000; }
     body.light #settingsPanel button:hover, body.light #settingsPanel select:hover { background:#e0e0e0; }
+    body.light .settings-btn { background: #f9f9f9; border: 1px solid #ccc; color: #000; }
+    body.light .settings-btn:hover { background: #e0e0e0; }
     body.light .switch { background: #d1d1d6; }
     body.light .toggle-row input:checked + .switch { background: #34c759; }
     body.light .switch::after { background: #ffffff; }
@@ -104,8 +106,7 @@
 	body.light #notesPopup { background: #ffffff; box-shadow: 0 6px 20px rgba(0,0,0,0.2); color: #000; }
     body.light #notesInput { background: #f9f9f9; border: 1px solid #ccc; color: #000; }
 	body.light .toggle-ui { background: #f9f9f9; border-color: #ccc; color: #000; }
-    body.light .toggle-btn input:checked + .toggle-ui, body.light .toggle-ui.active { border-color: #34c759; box-shadow: 0 0 0 1px #34c759 inset; }
-
+	body.light .toggle-btn input:checked + .toggle-ui, body.light .toggle-ui.active { box-shadow: 0 0 0 2px rgba(10,132,255,0.5); }
   </style>
 </head>
 
