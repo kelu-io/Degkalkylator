@@ -146,31 +146,26 @@
 
       <!-- Återställ data -->
       <hr>
-      <button id="resetAppBtn" class="settings-btn reset-icon">
-        🔄 Återställ
-      </button>
+      <button id="resetAppBtn" class="settings-btn reset-icon">🔄 Återställ</button>
     </div>
 
-	<!-- Rad 1: Innehåll -->
-	<section class="action-row">
-	  <button id="recipePopupBtn" class="toggle-ui" type="button">
-	    📖 Recept
-	  </button>
-	  <button id="notesPopupBtn" class="toggle-ui" type="button">
-	    📝 Notiser
-	  </button>
-	</section>
-	<!-- Rad 2: Beräkningslägen -->
-	<section class="action-row">
-	  <label class="toggle-btn">
-	    <input type="checkbox" id="usePref" hidden>
-	    <span class="toggle-ui">🥣 Fördeg</span>
-	  </label>
-	  <label class="toggle-btn">
-	    <input type="checkbox" id="useFlourMix" hidden>
-	    <span class="toggle-ui">🌾 Mjölmix</span>
-	  </label>
-	</section>
+    <!-- Rad 1: Innehåll -->
+    <section class="action-row">
+      <button id="recipePopupBtn" class="toggle-ui" type="button">📖 Recept</button>
+      <button id="notesPopupBtn" class="toggle-ui" type="button">📝 Notiser</button>
+    </section>
+
+    <!-- Rad 2: Beräkningslägen -->
+    <section class="action-row">
+      <label class="toggle-btn">
+        <input type="checkbox" id="usePref" hidden>
+        <span class="toggle-ui">🥣 Fördeg</span>
+      </label>
+      <label class="toggle-btn">
+        <input type="checkbox" id="useFlourMix" hidden>
+        <span class="toggle-ui">🌾 Mjölmix</span>
+      </label>
+    </section>
 
     <!-- Recept-popup -->
     <div id="recipePopup" class="modal">
@@ -237,7 +232,7 @@
   	  <section id="flourMixSection" class="collapsed">
         <label>Mjölmix (%)</label>
         <input type="number" id="flourMixPct" value="0" min="0" max="50">
-    		<p>🌾 Mjölmix: <strong id="flourMix"></strong> g</p>
+    	<p>🌾 Mjölmix: <strong id="flourMix"></strong> g</p>
   	  </section>
       <p>🌾 Mjöl: <strong><span id="mainFlour">0</span> g</strong></p>
       <p>💧 Vatten: <strong><span id="mainWater">0</span> g</strong></p>
@@ -261,7 +256,6 @@
       // -- App PIN-skydd --
       (() => {
         const APP_PIN = "1234";
-        // redan godkänd?
         if (localStorage.getItem("appAuthorized") === "1") return;
         const pin = prompt("🔒 Ange PIN-kod");
         if (pin !== APP_PIN) {
@@ -345,12 +339,13 @@
       const exportBtn = document.getElementById("exportRecipesBtn");
       const importBtn = document.getElementById("importRecipesBtn");
       const importInput = document.getElementById("importRecipesInput");
+	  
+	  let bulkUpdating = false;
 
       // -- Settings toggle --
-	  let bulkUpdating = false;
       settingsBtn.addEventListener("click",()=> settingsPanel.classList.toggle("open"));
 
-      // -- Theme --
+      // -- Teman --
       (() => {
         const savedTheme = localStorage.getItem("theme") || "dark";
         applyTheme(savedTheme);
@@ -371,7 +366,7 @@
         }
       })();
 
-      // -- Pref toggle --
+      // -- Fördeg toggle --
       (() => {
         const savedPref = localStorage.getItem("usePref") === "1";
         usePref.checked = savedPref;
@@ -386,7 +381,7 @@
         });
       })();
 	  
-  	  // -- Flour mix toggle --
+  	  // -- Mjölmix toggle --
       (() => {
         const saved = localStorage.getItem("useFlourMix") === "1";
         useFlourMix.checked = saved;
@@ -401,12 +396,12 @@
         });
       })();
       
-      // -- Data toggle --
+      // -- Backup toggle --
       backupToggle.addEventListener("change",()=> {
         backupSection.classList.toggle("collapsed", !backupToggle.checked);
       });
 
-      // -- Recipes --
+      // -- Recept --
       let recipes = JSON.parse(localStorage.getItem("recipes")||"[]");
       if(!Array.isArray(recipes)) recipes=[];
       refreshDropdown();
@@ -487,7 +482,7 @@
         recipeSelect.value = keep; // återställ vald
       }
 	  
-	  // -- Recipes popup --
+	  // -- Recept popup --
       recipePopupBtn.addEventListener("click", () => {
         recipePopup.classList.toggle("open");
         recipePopupBtn.classList.toggle("active", recipePopup.classList.contains("open"));
@@ -627,7 +622,7 @@
 	  const resetAppBtn = document.getElementById("resetAppBtn");
       if (resetAppBtn) resetAppBtn.addEventListener("click", hardResetApp);
       
-      // -- Recalc --
+      // -- Kalkylera --
       function recalc(){
         const D  = Number(totalDoughInput.value); if(!D || D<=0)return;
         const P  = Number(prefPct.value)/100;
@@ -673,7 +668,7 @@
         totalCheckEl.textContent = Math.round(prefTotal+mainTotal);
       }
 
-      // -- Persist inputs --
+      // -- Behålla värden --
       let saveTimer = null;
       inputs.forEach(input=> {
         const saved = localStorage.getItem(input.id);
@@ -687,7 +682,7 @@
         });
       });
 
-      // -- Initial calc --
+      // -- Kalkylera om --
       recalc();
       updateNotesIndicator();
     });
