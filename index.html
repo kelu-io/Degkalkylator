@@ -66,7 +66,8 @@
     .icon-btn { background: none; border: none; font-size: 14px; cursor: pointer; padding: 0; color: inherit; }
     .popup-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
     .popup-header h3 { margin: 0; }
-    #notesInput { width: 90%; height: 157px; padding: 8px; border-radius: 10px; border: 1px solid #4a4a4c; background: #3a3a3c; color: #f2f2f2; font-size: 14px; resize: none; }
+    .popup-actions { display: flex; justify-content: space-between; gap: 8px; margin-top: 10px; }
+    #notesInput { width: 92%; height: 157px; padding: 8px; border-radius: 10px; border: 1px solid #4a4a4c; background: #3a3a3c; color: #f2f2f2; font-size: 14px; resize: none; }
 
     /* -- Toggle-stil vid knapptryck -- */
     .toggle-btn { display: inline-block; cursor: pointer; user-select: none; margin: 0; }
@@ -187,6 +188,7 @@
 	  <textarea id="notesInput" placeholder="Skriv noteringar..."></textarea>
 	  <div class="popup-actions">
 	    <button id="saveNotesBtn" class="settings-btn">💾 Spara</button>
+      <button id="clearNotesBtn" class="settings-btn" type="button">🗑 Rensa</button>
 	  </div>
 	</div>
 
@@ -323,6 +325,7 @@
       const closeNotesPopup = document.getElementById("closeNotesPopup");
       const notesInput = document.getElementById("notesInput");
       const saveNotesBtn = document.getElementById("saveNotesBtn");
+      const clearNotesBtn = document.getElementById("clearNotesBtn");
 
       const recipeNameInput = document.getElementById("recipeNameInput");
       const saveRecipeBtn = document.getElementById("saveRecipeBtn");
@@ -573,6 +576,13 @@
         notesPopup.classList.remove("open");
         updateNotesIndicator();
       });
+      // Rensa anteckning
+      if (clearNotesBtn) {
+        clearNotesBtn.addEventListener("click", () => {
+          notesInput.value = "";
+          updateNotesIndicator();
+        });
+      }
 
       // Spara/exportera recept
       exportBtn.addEventListener("click",()=> {
