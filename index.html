@@ -45,40 +45,37 @@
     .settings-panel h3 { margin: 0 0 12px; font-size: 18px; }
     .settings-panel h4 { margin: 14px 0 6px; font-size: 13px; color: #b0b0b5; text-transform: uppercase; letter-spacing: 0.04em; }
     @keyframes settingsFade { from { opacity:0; transform:translateY(-6px);} to {opacity:1; transform:translateY(0);} }
-	
-	/* -- Reset-knapp i settings -- */
-    .reset-icon { display: block; margin: 20px auto; font-size: 26px; color: #ff3b30 !important; background: #3a3a3c; border: 1px solid #3a3a3c; border-radius: 12px; cursor: pointer; text-align: center; transition: transform 0.15s ease, opacity 0.15s ease; }
 
-    /* -- Recipe -- */
+    /* -- Buttons (shared) -- */
+    .settings-btn { width: 48%; padding: 8px; font-size: 16px; border-radius: 10px; background: #3a3a3c; border: 1px solid #4a4a4c; color: #f2f2f7; cursor: pointer; }
+
+    /* -- Backup-sektion -- */
     .recipe-section { margin-top: 10px; }
     .recipe-section.collapsed { display: none; }
-    #settingsPanel .settings-btn, #settingsPanel select { width: 48%; padding: 8px; font-size: 16px; border-radius: 10px; margin-top: 8px; background: #3a3a3c; border: 1px solid #3a3a3c; color: #f2f2f7; -webkit-appearance: none; cursor: pointer; transition: all 0.2s; }
-    #recipeSelect { width: 65%; padding: 8px; font-size: 16px; margin-top: 6px; border-radius: 10px; background: #3a3a3c; color:#fff; border:1px solid #3a3a3c; -webkit-appearance:none; appearance:none; transition: all 0.3s; }
-    #recipeNameInput { width: 92%; padding: 8px; font-size: 16px; background: #3a3a3c; }
-    
-    /* -- Recipe popup (modal) -- */
-    .settings-btn { width: 48%; padding: 8px; font-size: 16px; border-radius: 10px; background: #3a3a3c; border: 1px solid #3a3a3c; color: #f2f2f7; cursor: pointer; }
-    #recipePopup { display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -70%); background: #2c2c2e; padding: 20px; border-radius: 14px; width: 232px; z-index: 1000; box-shadow: 0 6px 20px rgba(0,0,0,0.5); }
-	#recipeSelect { width: 100%; }
-	#recipePopup.open { display: block; }
+
+    /* -- Reset-knapp i settings -- */
+    .reset-icon { display: block; margin: 20px auto; font-size: 16px; color: #ff3b30 !important; background: #3a3a3c; border: 1px solid #4a4a4c; border-radius: 12px; cursor: pointer; text-align: center; transition: transform 0.15s ease, opacity 0.15s ease; }
+
+    /* -- Recipe / Popup inputs -- */
+    #recipeNameInput { width: 92%; padding: 8px; font-size: 16px; background: #3a3a3c; border:1px solid #4a4a4c; }
+    #recipeSelect { width: 100%; padding: 8px; font-size: 16px; margin-top: 6px; border-radius: 10px; background: #3a3a3c; color:#fff; border:1px solid #4a4a4c; -webkit-appearance:none; appearance:none; transition: all 0.3s; }
+
+    /* -- Recipe + Notes popup (modal) -- */
+    #recipePopup, #notesPopup { display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -70%); background: #2c2c2e; padding: 20px; border: 1px solid #4a4a4c; border-radius: 14px; width: 232px; z-index: 1000; box-shadow: 0 6px 20px rgba(0,0,0,0.5); }
+    #recipePopup.open, #notesPopup.open { display: block; }
     .icon-btn { background: none; border: none; font-size: 14px; cursor: pointer; padding: 0; color: inherit; }
-	.popup-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
+    .popup-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
     .popup-header h3 { margin: 0; }
-	
-	/* -- Notes popup (modal) -- */
-    #notesPopup { display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -70%); background: #2c2c2e; padding: 20px; border-radius: 14px; width: 232px; z-index: 1000; box-shadow: 0 6px 20px rgba(0,0,0,0.5); }
-	#notesPopup.open { display: block; }
-	#notesInput { width: 90%; height: 120px; padding: 8px; border-radius: 10px; border: 1px solid #3a3a3c; background: #3a3a3c; color: #f2f2f2; font-size: 14px; resize: none; }
-	
-	 /* -- Toggle-stil vid knapp tryck -- */
+    #notesInput { width: 90%; height: 120px; padding: 8px; border-radius: 10px; border: 1px solid #4a4a4c; background: #3a3a3c; color: #f2f2f2; font-size: 14px; resize: none; }
+
+    /* -- Toggle-stil vid knapptryck -- */
     .toggle-btn { display: inline-block; cursor: pointer; user-select: none; margin: 0; }
-    .toggle-ui { display: inline-flex; align-items: center; gap: 6px; padding: 6px 8px; border-radius: 10px; border: 1px solid #3a3a3c; background: #2c2c2e; color: #d1d1d6; font-size: 14px; font-weight: 600; }	
+    .toggle-ui { display: inline-flex; align-items: center; gap: 6px; padding: 6px 8px; border-radius: 10px; border: 1px solid #3a3a3c; background: #2c2c2e; color: #d1d1d6; font-size: 14px; font-weight: 600; }
     .action-row { display: flex; align-items: center; gap: 8px; margin-top: 8px; flex-wrap: nowrap; }
-    .action-row .toggle-ui { display: inline-flex; align-items: center; gap: 6px; }
-    /* Aktiv: grön kant */
+    /* Aktiv: accent-glow */
     .toggle-btn input:checked + .toggle-ui,
     .toggle-ui.active { box-shadow: 0 0 0 2px rgba(10,132,255,0.5); }
-    
+
     /* -- Light mode -- */
     html.light { background: #f2f2f7; }
     body.light { background: #f2f2f7; color: #000; }
@@ -87,26 +84,21 @@
     body.light input { background:#f2f2f7; color:#000; border:1px solid #ccc; }
     body.light hr { border-top:1px solid #ccc; }
     body.light .settings-panel { background:#f2f2f7; }
-  	body.light .settings-panel h2 { color:#666; }
+    body.light .settings-panel h2 { color:#666; }
     body.light .settings-panel h4 { color:#666; }
-    body.light #settingsPanel button, body.light #settingsPanel select { background:#f9f9f9; border:1px solid #ccc; color:#000; }
-    body.light #settingsPanel button:hover, body.light #settingsPanel select:hover { background:#e0e0e0; }
-    body.light .settings-btn { background: #f9f9f9; border: 1px solid #ccc; color: #000; }
-    body.light .settings-btn:hover { background: #e0e0e0; }
     body.light .switch { background: #d1d1d6; }
     body.light .toggle-row input:checked + .switch { background: #34c759; }
     body.light .switch::after { background: #ffffff; }
-  	body.light #recipeSelect { background:#f2f2f7; color:#000; border:1px solid #ccc; appearance:none; -webkit-appearance:none; }
-    body.light #recipeNameInput { background: #f9f9f9; width: 90%; padding: 8px; font-size: 16px; }
-    body.light #recipePopup { background: #ffffff; box-shadow: 0 6px 20px rgba(0,0,0,0.2); color: #000; }
-	body.light #recipePopup button,
-	body.light #recipePopup select,
-	body.light #recipePopup input { background: #f9f9f9; border: 1px solid #ccc; color: #000; }
-	body.light #recipePopup button:hover { background: #e0e0e0; }
-	body.light #notesPopup { background: #ffffff; box-shadow: 0 6px 20px rgba(0,0,0,0.2); color: #000; }
+    body.light .settings-btn { background: #f9f9f9; border: 1px solid #ccc; color: #000; }
+    body.light .settings-btn:hover { background: #e0e0e0; }
+    body.light #recipeSelect { background:#f9f9f9; color:#000; border:1px solid #ccc; }
+    body.light #recipeNameInput { background: #f9f9f9; border:1px solid #ccc; }
+    body.light #recipePopup,
+    body.light #notesPopup { background: #ffffff; border:1px solid #ccc; box-shadow: 0 6px 20px rgba(0,0,0,0.2); color: #000; }
     body.light #notesInput { background: #f9f9f9; border: 1px solid #ccc; color: #000; }
-	body.light .toggle-ui { background: #f9f9f9; border-color: #ccc; color: #000; }
-	body.light .toggle-btn input:checked + .toggle-ui, body.light .toggle-ui.active { box-shadow: 0 0 0 2px rgba(10,132,255,0.5); }
+    body.light .toggle-ui { background: #f9f9f9; border-color: #ccc; color: #000; }
+    body.light .toggle-btn input:checked + .toggle-ui,
+    body.light .toggle-ui.active { box-shadow: 0 0 0 2px rgba(10,132,255,0.5); }
   </style>
 </head>
 
@@ -177,7 +169,7 @@
       <select id="recipeSelect">
         <option value="">– Inget recept –</option>
       </select>
-	  <hr>
+      <hr>
       <label>Skapa recept lokalt:</label>
       <input type="text" id="recipeNameInput" placeholder="Namn på recept...">
       <div style="display:flex; justify-content:space-between; margin-top:10px;">
@@ -316,20 +308,20 @@
 	  
   	  const useFlourMix = document.getElementById("useFlourMix");
       const flourMixSection = document.getElementById("flourMixSection");
-      const flourMixEl  = document.getElementById("flourMix");
+      const flourMixEl = document.getElementById("flourMix");
 
-	  const backupToggle = document.getElementById("backupToggle");
+      const backupToggle = document.getElementById("backupToggle");
       const backupSection = document.getElementById("backupSection");
-	  
-	  const recipePopup = document.getElementById("recipePopup");
+
+      const recipePopup = document.getElementById("recipePopup");
       const recipePopupBtn = document.getElementById("recipePopupBtn");
       const closeRecipePopup = document.getElementById("closeRecipePopup");
       const recipeSelect = document.getElementById("recipeSelect");
-	  
-	  const notesPopupBtn = document.getElementById("notesPopupBtn");
+
+      const notesPopupBtn = document.getElementById("notesPopupBtn");
       const notesPopup = document.getElementById("notesPopup");
       const closeNotesPopup = document.getElementById("closeNotesPopup");
-	  const notesInput = document.getElementById("notesInput");
+      const notesInput = document.getElementById("notesInput");
       const saveNotesBtn = document.getElementById("saveNotesBtn");
 
       const recipeNameInput = document.getElementById("recipeNameInput");
@@ -338,8 +330,8 @@
       const exportBtn = document.getElementById("exportRecipesBtn");
       const importBtn = document.getElementById("importRecipesBtn");
       const importInput = document.getElementById("importRecipesInput");
-	  
-	  let bulkUpdating = false;
+
+      let bulkUpdating = false;
 
       // -- Settings toggle --
       settingsBtn.addEventListener("click",()=> settingsPanel.classList.toggle("open"));
