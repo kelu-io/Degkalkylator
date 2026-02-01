@@ -198,7 +198,6 @@
 	  </div>
 	</div>
 
-   
     <!-- Inputs -->
     <section class="base-inputs">
       <label>⚖️ Total degvikt (g)</label>
@@ -520,7 +519,7 @@
         waterPct.value        = Number(r.W) || 0;
         saltPct.value         = Number(r.S) || 0;
         yeastPct.value        = Number(r.Y) || 0;
-        // toggles till fördeg/mjölmix
+        // Toggles till fördeg/mjölmix
         usePref.checked = prefPct.value > 0;
         usePref.dispatchEvent(new Event("change"));
         useFlourMix.checked = flourMixPct.value > 0;
