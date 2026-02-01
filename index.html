@@ -57,7 +57,6 @@
     .settings-btn { width: 48%; padding: 8px; font-size: 16px; border-radius: 10px; background: #3a3a3c; border: 1px solid #3a3a3c; color: #f2f2f7; cursor: pointer; }
     #recipePopup { display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -70%); background: #2c2c2e; padding: 20px; border-radius: 14px; width: 232px; z-index: 1000; box-shadow: 0 6px 20px rgba(0,0,0,0.5); }
 	#recipeSelect { width: 100%; }
-    .recipePopupBtn { background: none; border: none; padding: 0; font-size: 16px; font-weight: 600; color: #d1d1d6; cursor: pointer; }
 	#recipePopup.open { display: block; }
     .icon-btn { background: none; border: none; font-size: 14px; cursor: pointer; padding: 0; color: inherit; }
 	.popup-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
@@ -69,9 +68,9 @@
 	#notesInput { width: 90%; height: 120px; padding: 8px; border-radius: 10px; border: 1px solid #3a3a3c; background: #3a3a3c; color: #f2f2f2; font-size: 14px; resize: none; }
 	
 	 /* -- Toggle-stil vid knapp tryck -- */
-    .toggle-btn { display: inline-block; cursor: pointer; user-select: none; margin: 2px 2px 0 0 0; }
-    .toggle-ui { display: inline-flex; align-items: center; gap: 6px; padding: 6px 8px; border-radius: 10px; border: 0.5px solid #3a3a3c; background: #3a3a3c; font-size: 14px; }
-    .action-row { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-top: 2px; }
+    .toggle-btn { display: inline-block; cursor: pointer; user-select: none; margin: 0; }
+    .toggle-ui { display: inline-flex; align-items: center; gap: 6px; padding: 6px 8px; border-radius: 10px; border: 0.5px solid #3a3a3c; background: #3a3a3c; color: #d1d1d6; font-size: 16px; font-weight: 600; }
+    .action-row { display: flex; align-items: center; gap: 8px; margin-top: 8px; flex-wrap: nowrap; }
     .action-row .toggle-ui { display: inline-flex; align-items: center; gap: 6px; }
     /* Aktiv: grön kant */
     .toggle-btn input:checked + .toggle-ui,
@@ -102,7 +101,6 @@
 	body.light #recipePopup select,
 	body.light #recipePopup input { background: #f9f9f9; border: 1px solid #ccc; color: #000; }
 	body.light #recipePopup button:hover { background: #e0e0e0; }
-    body.light .recipePopupBtn { color: #000; }
 	body.light #notesPopup { background: #ffffff; box-shadow: 0 6px 20px rgba(0,0,0,0.2); color: #000; }
     body.light #notesInput { background: #f9f9f9; border: 1px solid #ccc; color: #000; }
 	body.light .toggle-ui { background: #f9f9f9; border-color: #ccc; color: #000; }
@@ -154,10 +152,10 @@
 
 	<!-- Rad 1: Innehåll -->
 	<section class="action-row">
-	  <button id="recipePopupBtn" class="recipePopupBtn toggle-ui" type="button">
+	  <button id="recipePopupBtn" class="toggle-ui" type="button">
 	    📖 Recept
 	  </button>
-	  <button id="notesPopupBtn" class="recipePopupBtn toggle-ui" type="button">
+	  <button id="notesPopupBtn" class="toggle-ui" type="button">
 	    📝 Notiser
 	  </button>
 	</section>
