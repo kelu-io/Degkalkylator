@@ -618,14 +618,14 @@
       });
       
       // -- Återställ data --
-      const resetAppBtn = document.getElementById("resetAppBtn");
       function hardResetApp() {
         const ok = confirm("Återställ appen helt till grundläge?\nAll lokal data raderas, recept etc.");
         if (!ok) return;
           localStorage.clear();
           location.reload();
       }
-      resetAppBtn.addEventListener("click", hardResetApp);
+	  const resetAppBtn = document.getElementById("resetAppBtn");
+      if (resetAppBtn) resetAppBtn.addEventListener("click", hardResetApp);
       
       // -- Recalc --
       function recalc(){
@@ -687,7 +687,9 @@
         });
       });
 
+      // -- Initial calc --
       recalc();
+      updateNotesIndicator();
     });
   </script>
 </body>
