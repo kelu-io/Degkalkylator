@@ -12,32 +12,12 @@
       "type": "image/png"
     },
     {
-      "src": "icon-192_light.png",
-      "sizes": "192x192",
-      "type": "image/png"
-    },
-    {
-      "src": "icon-192_grey.png",
-      "sizes": "192x192",
-      "type": "image/png"
-    },
-    {
       "src": "icon-192_dark.png",
       "sizes": "192x192",
       "type": "image/png"
     },
     {
       "src": "icon-512.png",
-      "sizes": "512x512",
-      "type": "image/png"
-    },
-    {
-      "src": "icon-512_light.png",
-      "sizes": "512x512",
-      "type": "image/png"
-    },
-    {
-      "src": "icon-512_grey.png",
       "sizes": "512x512",
       "type": "image/png"
     },
