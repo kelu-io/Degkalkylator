@@ -131,6 +131,15 @@
 
       <hr>
 
+      <h4>Beräkning</h4>
+      <label class="toggle-row">
+        <span>⚖️ Räkna från mjölvikt</span>
+        <input type="checkbox" id="calcFromFlour">
+        <span class="switch"></span>
+      </label>
+
+      <hr>
+
       <h4>Data</h4>
       <label class="toggle-row">
         <span>💾 Backup</span>
@@ -204,6 +213,10 @@
     <section class="base-inputs">
       <label>⚖️ Total degvikt (g)</label>
       <input type="number" id="totalDoughInput" value="1000">
+    </section>
+    <section class="base-inputs" id="flourInputSection" style="display:none;">
+      <label>⚖️ Total mjölvikt (g)</label>
+      <input type="number" id="totalFlourInput" value="500">
     </section>
 
     <section id="prefSection" class="collapsed">
@@ -292,6 +305,10 @@
       const saltPct = document.getElementById("saltPct");
       const yeastPct = document.getElementById("yeastPct");
       const inputs = [totalDoughInput,prefPct,prefHyd,prefYeastPct,flourMixPct,waterPct,saltPct,yeastPct];
+      
+      const calcFromFlour = document.getElementById("calcFromFlour");
+      const totalFlourInput = document.getElementById("totalFlourInput");
+      const flourInputSection = document.getElementById("flourInputSection");
       
       const mainFlourEl = document.getElementById("mainFlour");
       const mainWaterEl = document.getElementById("mainWater");
@@ -396,6 +413,23 @@
           localStorage.setItem("useFlourMix", on ? "1" : "0");
           if (!bulkUpdating) recalc();
         });
+      })();
+      
+      // -- Total mjölvikt toggle --
+	    (() => {
+        const saved = localStorage.getItem("calcMode") === "flour";
+        calcFromFlour.checked = saved;
+        updateCalcMode();
+        calcFromFlour.addEventListener("change", () => {
+          localStorage.setItem("calcMode", calcFromFlour.checked ? "flour" : "dough");
+          updateCalcMode();
+          recalc();
+        });
+        function updateCalcMode() {
+          const flourMode = calcFromFlour.checked;
+          flourInputSection.style.display = flourMode ? "block" : "none";
+          totalDoughInput.parentElement.style.display = flourMode ? "none" : "block";
+        }
       })();
       
       // -- Backup toggle --
@@ -633,7 +667,8 @@
       
       // -- Kalkylera --
       function recalc(){
-        const D  = Number(totalDoughInput.value); if(!D || D<=0)return;
+        const fromFlour = localStorage.getItem("calcMode") === "flour";
+        //const D  = Number(totalDoughInput.value); if(!D || D<=0)return;
         const P  = Number(prefPct.value)/100;
         const PH = Number(prefHyd.value)/100;
         const PY = Number(prefYeastPct.value)/100;
@@ -641,6 +676,17 @@
         const W  = Number(waterPct.value)/100;
         const S  = Number(saltPct.value)/100;
         const Y  = Number(yeastPct.value)/100;
+		
+        // Räkna degvikt eller mjölvikt
+        let D;
+        if (fromFlour) {
+          const F = Number(totalFlourInput.value);
+          if (!F || F <= 0) return;
+          D = F*(1+W+S+Y);
+        } else {
+          D = Number(totalDoughInput.value);
+          if (!D || D <= 0) return;
+        }
 
         const totalFlour = D/(1+W+S+Y);
         const totalWater = totalFlour*W;
