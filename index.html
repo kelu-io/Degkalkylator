@@ -399,6 +399,21 @@
           if (!bulkUpdating) recalc();
         });
       })();
+      
+      // -- Mjölmix toggle --
+      (() => {
+        const saved = localStorage.getItem("useFlourMix") === "1";
+        useFlourMix.checked = saved;
+        flourMixSection.classList.toggle("collapsed", !saved);
+        if (!saved) flourMixPct.value = 0;
+        useFlourMix.addEventListener("change",()=> {
+          const on = useFlourMix.checked;
+          flourMixSection.classList.toggle("collapsed", !on);
+          if (!on) flourMixPct.value = 0;
+          localStorage.setItem("useFlourMix", on ? "1" : "0");
+          if (!bulkUpdating) recalc();
+        });
+      })();
 	  
       // -- Total degvikt/mjölvikt toggle -
       (() => {
