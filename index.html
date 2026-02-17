@@ -134,8 +134,7 @@
       <h4>Beräkning</h4>
       <label class="toggle-row">
         <span>⚖️ Degvikt / Mjölvikt</span>
-        <input type="checkbox" id="calcFromFlour">
-        <span class="switch"></span>
+        <input type="checkbox" id="calcFromFlour"><span class="switch"></span>
       </label>
 
       <hr>
@@ -209,8 +208,8 @@
 	  </div>
 	</div>
 
-    <!-- Inputs -->
-    <section class="base-inputs">
+    <!-- Inputs -->   
+    <section class="base-inputs" id="doughInputSection">
       <label>⚖️ Total degvikt (g)</label>
       <input type="number" id="totalDoughInput" value="1000">
     </section>
@@ -309,6 +308,7 @@
       const calcFromFlour = document.getElementById("calcFromFlour");
       const totalFlourInput = document.getElementById("totalFlourInput");
       const flourInputSection = document.getElementById("flourInputSection");
+      const doughInputSection = document.getElementById("doughInputSection");
       
       const mainFlourEl = document.getElementById("mainFlour");
       const mainWaterEl = document.getElementById("mainWater");
@@ -400,36 +400,39 @@
         });
       })();
 	  
-  	  // -- Mjölmix toggle --
+      // -- Total degvikt/mjölvikt toggle -
       (() => {
-        const saved = localStorage.getItem("useFlourMix") === "1";
-        useFlourMix.checked = saved;
-        flourMixSection.classList.toggle("collapsed", !saved);
-        if (!saved) flourMixPct.value = 0;
-        useFlourMix.addEventListener("change",()=> {
-          const on = useFlourMix.checked;
-          flourMixSection.classList.toggle("collapsed", !on);
-          if (!on) flourMixPct.value = 0;
-          localStorage.setItem("useFlourMix", on ? "1" : "0");
-          if (!bulkUpdating) recalc();
-        });
-      })();
-      
-      // -- Total mjölvikt toggle --
-	    (() => {
-        const saved = localStorage.getItem("calcMode") === "flour";
-        calcFromFlour.checked = saved;
-        updateCalcMode();
-        calcFromFlour.addEventListener("change", () => {
-          localStorage.setItem("calcMode", calcFromFlour.checked ? "flour" : "dough");
-          updateCalcMode();
-          recalc();
-        });
-        function updateCalcMode() {
+        const isFlour = () => localStorage.getItem("calcMode") === "flour";
+        const setMode = (flour) => localStorage.setItem("calcMode", flour ? "flour" : "dough");
+        const factors = () => {
+          const W = Number(waterPct.value) / 100;
+          const S = Number(saltPct.value) / 100;
+          const Y = Number(yeastPct.value) / 100;
+          return 1 + W + S + Y;
+        };
+        const showMode = () => {
           const flourMode = calcFromFlour.checked;
           flourInputSection.style.display = flourMode ? "block" : "none";
-          totalDoughInput.parentElement.style.display = flourMode ? "none" : "block";
-        }
+          doughInputSection.style.display = flourMode ? "none" : "block";
+        };
+        const convert = () => {
+          const k = factors();
+          if (calcFromFlour.checked) {
+            const D = Number(totalDoughInput.value);
+            if (D > 0) totalFlourInput.value = Math.round(D / k);
+          } else {
+            const F = Number(totalFlourInput.value);
+            if (F > 0) totalDoughInput.value = Math.round(F * k);
+          }
+        };
+        calcFromFlour.checked = isFlour();
+        showMode();
+        calcFromFlour.addEventListener("change", () => {
+          convert();
+          setMode(calcFromFlour.checked);
+          showMode();
+          recalc();
+        });
       })();
       
       // -- Backup toggle --
@@ -668,7 +671,7 @@
       // -- Kalkylera --
       function recalc(){
         const fromFlour = localStorage.getItem("calcMode") === "flour";
-        //const D  = Number(totalDoughInput.value); if(!D || D<=0)return;
+        
         const P  = Number(prefPct.value)/100;
         const PH = Number(prefHyd.value)/100;
         const PY = Number(prefYeastPct.value)/100;
